@@ -2404,7 +2404,7 @@ If `true`, scroll the mathfield into view after insertion such that the insertio
 ##### InsertOptions.selectionMode?
 
 ```ts
-optional selectionMode: "placeholder" | "after" | "before" | "item";
+optional selectionMode: "placeholder" | "placeholder-after" | "after" | "before" | "item";
 ```
 
 Describes where the selection will be after the insertion:
@@ -2412,6 +2412,7 @@ Describes where the selection will be after the insertion:
 | | |
 | :---------- | :---------- |
 |`"placeholder"`| The selection will be the first available placeholder in the text that has been inserted (default)|
+|`"placeholder-after"`| The selection will be the last available placeholder in the text that has been inserted|
 |`"after"`      | The selection will be an insertion point after the inserted text|
 |`"before"`     | The selection will be an insertion point before the inserted text|
 |`"item"`       | The inserted text will be selected|
@@ -5223,6 +5224,18 @@ layer: string;
 ```
 
 Name of the layer to shift to when the key is pressed
+
+</MemberCard>
+
+<MemberCard>
+
+##### VirtualKeyboardKeycap.selectionMode
+
+```ts
+selectionMode: "item" | "after" | "before" | "placeholder" | "placeholder-after";
+```
+
+Selection mode of the keycap
 
 </MemberCard>
 
