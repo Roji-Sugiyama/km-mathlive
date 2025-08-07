@@ -1,5 +1,5 @@
 import type { Selector } from './commands';
-import type { ParseMode, Style } from './core-types';
+import type { InsertOptions, ParseMode, Style } from './core-types';
 import type { OriginValidator } from './options';
 
 /**
@@ -68,6 +68,11 @@ export interface VirtualKeyboardKeycap {
    *
    */
   class: string;
+
+  /**
+   * Selection mode of the keycap
+   */
+  selectionMode: InsertOptions['selectionMode'];
 
   /** Width of the keycap, as a multiple of the standard keycap width */
   width: 0.5 | 1.0 | 1.5 | 2.0 | 5.0;

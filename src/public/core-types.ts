@@ -63,7 +63,7 @@ export type ParseMode = 'math' | 'text' | 'latex';
     | `unexpected-token`            |  An unexpected character was encountered.  |
     | `unexpected-end-of-string`    |  The end of the string was reached, but some required arguments were missing. |
     | `improper-alphabetic-constant`    | The alphabetic constant prefix `` ` `` was not followed by a letter or single character command. |
-* @category Conversion 
+* @category Conversion
 */
 export type ParserErrorCode =
   | 'unknown-command'
@@ -561,11 +561,12 @@ export type InsertOptions = {
      | | |
      | :---------- | :---------- |
      |`"placeholder"`| The selection will be the first available placeholder in the text that has been inserted (default)|
+     |`"placeholder-after"`| The selection will be the last available placeholder in the text that has been inserted|
      |`"after"`      | The selection will be an insertion point after the inserted text|
      |`"before"`     | The selection will be an insertion point before the inserted text|
      |`"item"`       | The inserted text will be selected|
      */
-  selectionMode?: 'placeholder' | 'after' | 'before' | 'item';
+  selectionMode?: 'placeholder' | 'placeholder-after' | 'after' | 'before' | 'item';
 
   /** If `true`, silence notifications during insertion */
   silenceNotifications?: boolean;

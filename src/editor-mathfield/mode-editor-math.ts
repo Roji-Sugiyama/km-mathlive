@@ -350,11 +350,13 @@ export class MathModeEditor extends ModeEditor {
     //
     // Update the anchor's location
     //
-    if (options.selectionMode === 'placeholder') {
+    if (options.selectionMode === 'placeholder' || options.selectionMode === 'placeholder-after') {
       // Move to the next placeholder
-      const placeholder = newAtoms
-        .flatMap((x) => [x, ...x.children])
-        .find((x) => x.type === 'placeholder');
+      const atoms = newAtoms.flatMap((x) => [x, ...x.children]);
+      // 分数の場合は後ろのプレースホルダーを使用する
+      const placeholder = options.selectionMode === 'placeholder-after'
+        ? atoms.reverse().find((x) => x.type === 'placeholder')
+        : atoms.find((x) => x.type === 'placeholder');
 
       if (placeholder) {
         const placeholderOffset = model.offsetOf(placeholder);

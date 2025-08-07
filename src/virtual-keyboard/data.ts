@@ -720,7 +720,7 @@ export const LAYOUTS: Partial<
           div.minimalist-backdrop {
             display: flex;
             justify-content: center;
-          }          
+          }
           div.minimalist-container {
             --keycap-height: 40px;
             --keycap-max-width: 53px;
@@ -731,7 +731,7 @@ export const LAYOUTS: Partial<
             border-top-right-radius: 8px;
             border: 1px solid var(--keyboard-border);
             box-shadow: 0 0 32px rgb(0 0 0 / 30%);
-          }        
+          }
         `,
         backdrop: 'minimalist-backdrop',
         container: 'minimalist-container',
@@ -740,7 +740,7 @@ export const LAYOUTS: Partial<
             '+',
             '-',
             '\\times',
-            { latex: '\\frac{#@}{#0}', class: 'small' },
+            { latex: '\\frac{#@}{#0}', class: 'small', selectionMode: 'placeholder-after' },
             '=',
             '[.]',
             '(',

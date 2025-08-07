@@ -369,19 +369,87 @@ export function move(
   return true;
 }
 
+/**
+ * 指定した方向にキャレットを移動する（左右）
+ * @param model
+ * @param pos
+ * @param direction
+ * @returns
+ */
 function nextValidPosition(
   model: _Model,
   pos: number,
   direction: 'forward' | 'backward'
 ): number {
-  pos = pos + (direction === 'forward' ? +1 : -1);
 
-  if (pos < 0 || pos > model.lastOffset) return pos;
+  const tempPos = pos + (direction === 'forward' ? +1 : -1);
+  if (tempPos < 0 || tempPos > model.lastOffset) return tempPos;
 
-  if (!isValidPosition(model, pos))
-    return nextValidPosition(model, pos, direction);
+  // 分数の前後か判定する
+  const atom = model.at(pos);
+  const nextAtom = model.at(tempPos);
 
-  return pos;
+  const frac = (model.findAtom((x: Atom) =>
+    !!x.above?.some((y: Atom) => y.id === atom.id) ||
+    !!x.below?.some((y: Atom) => y.id === atom.id)
+  ))
+  const nextFrac = (model.findAtom((x: Atom) =>
+    !!x.above?.some((y: Atom) => y.id === nextAtom.id) ||
+    !!x.below?.some((y: Atom) => y.id === nextAtom.id)
+  ))
+
+  const fracCount = getFracCount(atom);
+  const nextFracCount = getFracCount(nextAtom);
+
+  if (direction === 'forward') {
+    // 分数の前にキャレットがあり、方向が forward の場合、分母の開始点に移動する
+    if (fracCount < nextFracCount) {
+      return model.offsetOf(nextFrac!.below![0]);
+    }
+    // 分母の終了点にキャレットがあり、方向が forward の場合、分子の開始点に移動する
+    if (fracCount > nextFracCount) {
+      return model.offsetOf(frac!.above![0]);
+    }
+    // 分子の終了点にキャレットがあり、方向が forward の場合、分数の終了点に移動する
+    if (frac && model.offsetOf(frac.above![frac.above!.length - 1]) === model.offsetOf(atom)) {
+      return model.offsetOf(frac);
+    }
+  } else if (direction === 'backward') {
+    // 分数の終了点にキャレットがあり、方向が backward の場合、分子の終了点に移動する
+    if (fracCount < nextFracCount) {
+      return model.offsetOf(nextFrac!.above![nextFrac!.above!.length - 1]);
+    }
+    // 分子の開始点にキャレットがあり、方向が backward の場合、分数の終了点に移動する
+    if (fracCount > nextFracCount) {
+      return model.offsetOf(frac!.below![frac!.below!.length - 1]);
+    }
+    // 分母の開始点にキャレットがあり、方向が backward の場合、分数の開始点に移動する
+    if (frac && model.offsetOf(frac.below![0]) === model.offsetOf(atom)) {
+      return model.offsetOf(frac.above![0]) - 1;
+    }
+  }
+
+  if (!isValidPosition(model, tempPos))
+    return nextValidPosition(model, tempPos, direction);
+
+  return tempPos;
+}
+
+/**
+ * 分数の階層を取得する
+ * @param atom
+ * @returns
+ */
+function getFracCount(atom: Atom): number {
+  let count = 0;
+  let parent = atom.parent;
+  while (parent) {
+    if (parent.command === '\\frac') {
+      count++;
+    }
+    parent = parent.parent;
+  }
+  return count;
 }
 
 function isValidPosition(model: _Model, pos: number): boolean {

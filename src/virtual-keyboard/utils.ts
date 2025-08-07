@@ -1244,6 +1244,7 @@ export function executeKeycapCommand(
         scrollIntoView: true,
         mode: 'math',
         format: 'latex',
+        selectionMode: keycap.selectionMode,
       } as InsertOptions,
     ];
   }
@@ -1251,7 +1252,12 @@ export function executeKeycapCommand(
     command = [
       'typedText',
       keycap.key,
-      { focus: true, feedback: true, simulateKeystroke: true },
+      {
+        focus: true,
+        feedback: true,
+        simulateKeystroke: true,
+        selectionMode: keycap.selectionMode
+      },
     ];
   }
 
@@ -1265,6 +1271,7 @@ export function executeKeycapCommand(
         scrollIntoView: true,
         mode: 'math',
         format: 'latex',
+        selectionMode: keycap.selectionMode,
       } as InsertOptions,
     ];
   }
@@ -1272,7 +1279,12 @@ export function executeKeycapCommand(
     command = [
       'typedText',
       keycap.label,
-      { focus: true, feedback: true, simulateKeystroke: true },
+      {
+        focus: true,
+        feedback: true,
+        simulateKeystroke: true,
+        selectionMode: keycap.selectionMode,
+      },
     ];
   }
   VirtualKeyboard.singleton?.executeCommand(command);
