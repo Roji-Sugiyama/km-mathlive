@@ -1,6 +1,6 @@
 {
   "name": "mathlive",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A web component for math input",
   "license": "MIT",
   "funding": {
@@ -11,9 +11,9 @@
   "files": [
     "/dist"
   ],
-  "types": "./types/mathlive.d.ts",
-  "module": "./mathlive.min.mjs",
-  "main": "./mathlive.min.js",
+  "types": "./dist/types/mathlive.d.ts",
+  "module": "./dist/mathlive.min.mjs",
+  "main": "./dist/mathlive.min.js",
   "exports": {
     "./vue": "./vue-mathlive.mjs",
     "./fonts.css": "./mathlive-fonts.css",
